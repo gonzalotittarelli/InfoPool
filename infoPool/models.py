@@ -32,7 +32,6 @@ class Viajero(Persona):
     mail = models.EmailField(max_length=254)
     foto = models.ImageField(max_length=100)
     bloqueado = models.BooleanField(default=False)
-    recorridos = models.ManyToManyField(Recorrido)
 
 
 
@@ -75,7 +74,7 @@ class Recorrido(models.Model):
         (TIPO_PERIODICO, 'periodico'),
         (TIPO_PUNTUAL, 'puntual'),
     )
-    pasajeros = models.ManyToManyField(Viajero)
+    pasajeros = models.ManyToManyField(Viajero, related_name='pasajeros')
     conductor = models.ForeignKey(Viajero, related_name='conductor')
     tipo = models.CharField(max_length=3,choices=OPCIONES_TIPO)
     fecha_publicacion = models.DateField(auto_now_add=True)
