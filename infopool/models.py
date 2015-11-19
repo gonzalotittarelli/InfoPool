@@ -1,22 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Persona(models.Model):
-    """Clase que modela a una persona, la cual puede ser administrador o viajero"""
-
-    usuario = models.CharField(max_length=200)
-    clave = models.CharField(max_length=200)
-
-
-
-
-class Administrador(Persona):
-    """ Clase que modela a un Administrador del sistema."""
-    pass
-
-
-
-
-class Viajero(Persona):
+class PerfilViajero(models.Model):
     """ Clase que modela a un Viajero del sistema, el mismo debe registrarse presentando los datos pertinentes. 
 
     Tendra un estado para representar si esta activo o bloqueado.
@@ -25,12 +10,8 @@ class Viajero(Persona):
 
     """
 
-    nombres = models.CharField(max_length=200)
-    apellido = models.CharField(max_length=200)
-    telefono = models.CharField(max_length=100, null=True, blank=True)
-    email = models.EmailField()
-    foto = models.ImageField(max_length=100, null=True, blank=True)
-    bloqueado = models.BooleanField(default=False)
+    usuario = models.OneToOneField(User)
+    foto = models.ImageField(max_length=256, null=True)
 
 
 
@@ -68,13 +49,15 @@ class Recorrido(models.Model):
     TIPO_DIARIO = 'd'
     TIPO_PERIODICO = 'pe'
     TIPO_PUNTUAL = 'pu'
+
     OPCIONES_TIPO = (
         (TIPO_DIARIO, 'diario'),
         (TIPO_PERIODICO, 'periodico'),
         (TIPO_PUNTUAL, 'puntual'),
     )
-    pasajeros = models.ManyToManyField(Viajero, related_name='pasajeros')
-    conductor = models.ForeignKey(Viajero, related_name='conductor')
+
+    pasajeros = models.ManyToManyField(PerfilViajero, related_name='pasajeros')
+    conductor = models.ForeignKey(PerfilViajero, related_name='conductor')
     tipo = models.CharField(max_length=3,choices=OPCIONES_TIPO)
     fecha_publicacion = models.DateField(auto_now_add=True)
     fecha_inicio = models.DateField()
@@ -94,8 +77,8 @@ class Denuncia(models.Model):
     """Clase que modela a una Denuncia de un usuario hacia otro a partir del recorrido realizado."""
 
     descripcion = models.TextField()
-    denunciante = models.ForeignKey(Viajero, related_name='denunciante')
-    denunciado = models.ForeignKey(Viajero, related_name='denunciado')
+    denunciante = models.ForeignKey(PerfilViajero, related_name='denunciante')
+    denunciado = models.ForeignKey(PerfilViajero, related_name='denunciado')
 
 
 
@@ -113,6 +96,7 @@ class Peticion(models.Model):
     ESTADO_PENDIENTE = 'p'
     ESTADO_ACEPTADA = 'a'
     ESTADO_RECHAZADA = 'r'
+
     ESTADOS = (
         (ESTADO_PENDIENTE, 'pendiente'),
         (ESTADO_ACEPTADA, 'aceptada'),
@@ -122,7 +106,7 @@ class Peticion(models.Model):
     fecha = models.DateField(auto_now_add=True)
     estado = models.CharField(max_length=2, choices=ESTADOS, default=ESTADO_PENDIENTE)
     recorrido = models.ForeignKey(Recorrido)
-    participante = models.ForeignKey(Viajero, related_name='participante')
+    participante = models.ForeignKey(PerfilViajero, related_name='participante')
 
 
 
@@ -136,8 +120,8 @@ class Calificacion(models.Model):
 
     fecha = models.DateField(auto_now_add=True)
     tipo = models.BooleanField(default=False)
-    viajero_calificado = models.ForeignKey(Viajero, related_name='viajero_calificado')
-    viajero_calificador = models.ForeignKey(Viajero, related_name='viajero_calificador')
+    viajero_calificado = models.ForeignKey(PerfilViajero, related_name='viajero_calificado')
+    viajero_calificador = models.ForeignKey(PerfilViajero, related_name='viajero_calificador')
     recorrido_calificado = models.ForeignKey(Recorrido)
 
 
@@ -155,5 +139,5 @@ class Mensaje(models.Model):
     cuerpo = models.TextField()
     fecha = models.DateField(auto_now_add=True)
     hora = models.TimeField(auto_now_add=True)
-    destinatario = models.ForeignKey(Viajero, related_name='destinatario')
-    remitente = models.ForeignKey(Viajero, related_name='remitente')
+    destinatario = models.ForeignKey(PerfilViajero, related_name='destinatario')
+    remitente = models.ForeignKey(PerfilViajero, related_name='remitente')
