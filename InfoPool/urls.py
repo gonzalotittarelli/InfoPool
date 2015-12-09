@@ -17,6 +17,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^infopool/', include('infopool.urls')),
+    url(r'^infopool/', include('infopool.urls', namespace="infopool")),
     url(r'^infopool/admin/', include(admin.site.urls)),
 ]

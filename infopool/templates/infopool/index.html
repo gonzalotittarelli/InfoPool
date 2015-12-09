@@ -1,0 +1,71 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include 'infopool/bases/head-frontend.html' %}
+        <script src="{% static 'infopool/bootstrap/js/bootstrap.min.js' %}"></script>
+    </head>
+    
+    <body>
+        <header class="navbar navbar-custom navbar-static-top bs-docs-nav" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span> 
+                    </button>
+                    <a href="{% url 'infopool:index' %}" class="navbar-brand" title="InfoPool"><img style="max-width:130px; margin-top: -12px;" src="{% static 'infopool/images/logo-infopool.png' %}"></a>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                    <form action="#" class="navbar-form navbar-right" role="form" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="usuario" placeholder="Usuario"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="clave" placeholder="Contraseña"/>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info-pool">Ingresar</button>
+                        </div>
+                    </form>
+                </nav>
+            </div>
+        </header>
+        <div class="container">
+            <div class="panel panel-default"> 
+                <div class="panel-body">            
+                    <div class="col-md-12" style="margin-top:3%;" role="main">
+                        <div class="well">
+                            <h1>Coordinar Viajes entre Informáticos</h1>
+                            <p>El objetivo de este sistema es coordinar entre varios pasajeros para reducir gastos, disminuir la entrada de vehículos a La Plata y contribuir con el cuidado del medio ambiente.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:3%;" role="main">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <img src='{% static "infopool/images/fomentar-relaciones.png" %}' alt='Fomentar Relaciones' data-holder-rendered='true' height='1046'>
+                                </div>
+                                <div class="item">
+                                    <img src='{% static "infopool/images/reducir-costos.png" %}' alt='Reducir Costos"' data-holder-rendered='true' height='1046'>
+                                </div>
+                                <div class="item">
+                                    <img src='{% static "infopool/images/responsabilidad-social.png" %}' alt='Responsabilidad Social' data-holder-rendered='true' height='1046'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8 col-md-offset-2" style="text-align: center">
+                        <a href="#">
+                          <button type="button" class="btn btn-success btn-lg">Registrate</button>
+                        </a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include "infopool/bases/footer.html" %}
+    </body>
+</html>
