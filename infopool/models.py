@@ -10,7 +10,7 @@ class PerfilViajero(models.Model):
 
     """
 
-    usuario = models.OneToOneField(User)
+    usuario = models.OneToOneField(User)    
     foto = models.ImageField(max_length=256, null=True)
 
 
@@ -44,6 +44,8 @@ class Recorrido(models.Model):
 
     Una cuestion importante es que solo usuarios conductores pueden dar de alta recorridos. Es decir, no hacemos distincion entre conductor pasajero
     o ambos, para simplificar la cuestion.
+
+    Para los dias crear una tabla a parte simulando la idea de java
     """
 
     TIPO_DIARIO = 'd'
@@ -71,7 +73,28 @@ class Recorrido(models.Model):
     ruta = models.CharField(max_length=300)
 
 
+class DiasRecorrido(models.Model):
+    """ DiasRecorrido
 
+    """
+    
+    LUNES = 'l'
+    MARTES = 'mar'
+    MIERCOLES = 'mier'
+    JUEVES = 'j'
+    VIERNES = 'v'
+
+    OPCIONES_DIAS = (
+        (LUNES, 'lunes'),
+        (MARTES, 'martes'),
+        (MIERCOLES, 'miercoles'),
+        (JUEVES, 'jueves'),
+        (VIERNES, 'viernes'),
+    )    
+
+    dia = models.CharField(max_length=5, choices=OPCIONES_DIAS)
+    recorrido = models.ForeignKey(Recorrido)
+        
 
 class Denuncia(models.Model):
     """Clase que modela a una Denuncia de un usuario hacia otro a partir del recorrido realizado."""

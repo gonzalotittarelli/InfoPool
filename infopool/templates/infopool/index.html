@@ -1,12 +1,13 @@
+{% extends "infopool/base.html" %}
+
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
+
+{% block head%}
         {% include 'infopool/bases/head-frontend.html' %}
         <script src="{% static 'infopool/bootstrap/js/bootstrap.min.js' %}"></script>
-    </head>
-    
-    <body>
+{% endblock %}
+
+{% block content %}
         <header class="navbar navbar-custom navbar-static-top bs-docs-nav" role="banner">
             <div class="container">
                 <div class="navbar-header">
@@ -66,6 +67,5 @@
                 </div>
             </div>
         </div>
-        {% include "infopool/bases/footer.html" %}
-    </body>
-</html>
+{% endblock %}
+        {# include "infopool/bases/footer.html" #}
